@@ -1,0 +1,48 @@
+public class Disciplina {
+    
+    private String acr;
+    private String prof;
+    private String senha;
+    
+
+    
+
+    public void setAcr(String acr) {
+        this.acr = acr;
+    }
+
+    public void setProf(String prof) {
+        this.prof = prof;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getAcr() {
+        return acr;
+    }
+
+    public String getProf() {
+        return prof;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    Disciplina(String acr, String prof, String senha) {
+        this.acr = acr;
+        this.prof = prof;
+        this.senha = senha;
+      
+    }
+
+    @Override
+    public String toString() {
+        return "Disciplina{" + "acr=" + acr + ", prof=" + prof + ", senha=" + senha + '}';
+    }
+    
+    
+    
+}
