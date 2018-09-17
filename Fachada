@@ -1,0 +1,71 @@
+public class Fachada {
+    
+    ArrayList<Atividade> lista = new ArrayList<Atividade>();
+    ArrayList<Disciplina> listaDisc = new ArrayList<Disciplina>();
+    
+
+    public Fachada() {
+    }
+    
+    public void criarDisc(String acro, String profe, String senha1){
+        Disciplina k = new Disciplina(acro,profe,senha1);
+        listaDisc.add(k);
+        System.out.println("Disciplina criada" + k.toString());        
+    }
+    
+    
+    public void criarAtv(String nomee, String descr, String statuss, String tagi,String nomeProf){
+        Atividade s = new Atividade (nomee,descr,statuss,tagi);
+        for(Disciplina p: listaDisc){
+            if(p.getProf().contains(nomeProf)){
+                s.setDisc(p);
+                lista.add(s);
+            }
+        }
+        
+        
+    }
+    
+    public void buscar(String tagB){
+        for(Atividade p: lista){
+            if(p.getTag().contains(tagB)){
+                System.out.println(p.toString());
+            }
+        }
+    }
+    public void excluirAtividade(String tagB){
+        for(Atividade p: lista){
+            if(p.getTag().contains(tagB)){
+                lista.remove(p);
+            }
+        }
+    }
+    public void concluirAtividade(String tagB,String novoStt){
+        for(Atividade p: lista){
+            if(p.getTag().contains(tagB)){
+                p.setStatus(novoStt);
+            }
+        }
+    }
+    public void visualizarAtvs(){
+        System.out.println("ATIVIDADES");
+        for(Atividade p: lista){
+            System.out.println(p.getDisc().getAcr()+ " = " +p.getNome() + ": " + p.getDesc());
+        }
+    }
+    public void feed(){
+        for(Atividade p: lista){
+            if(p.getStatus().contains("Em andamento")){
+                System.out.println("\nAtividades em Andamento:\n"+p.toString());
+            }
+            if(p.getStatus().contains("Finalizada")){
+                System.out.println("\nAtividades finalizadas:\n"+p.toString());
+            }
+            if(p.getStatus().contains("Arquivada")){
+                System.out.println("\nAtividades arquivadas:\n"+ p.toString());
+            }
+        }
+    }
+   
+    }
+        
