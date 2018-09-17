@@ -1,0 +1,17 @@
+public static void main(String[] args) {
+        // TODO code application logic here
+        
+        
+        //OBS: O STATUS DAS ATIVIDADES DEVEM SER = "    Em andamento / Finalizada / Arquivada
+        
+        
+        Fachada x = new Fachada();
+        x.criarDisc("Port", "Tassia", "0203");
+        x.criarDisc("Mat","Orlando","4875");
+        x.criarDisc("Geo", "Petrucio", "8459");
+        
+        x.criarAtv("Trabalho","Trabalho sobre as peda", "Em andamento", "Urgente", "Petrucio");
+        x.criarAtv("Redação", "Desafio para formção do viado", "Arquivada", "LLLL", "Tassia");
+        x.visualizarAtvs();
+        
+        x.feed();
