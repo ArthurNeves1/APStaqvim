@@ -1,3 +1,17 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package taqvim;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+/**
+ *
+ * @author Vinícius
+ */
 public class Fachada {
     
     ArrayList<Atividade> lista = new ArrayList<Atividade>();
@@ -14,8 +28,8 @@ public class Fachada {
     }
     
     
-    public void criarAtv(String nomee, String descr, String statuss, String tagi,String nomeProf){
-        Atividade s = new Atividade (nomee,descr,statuss,tagi);
+    public void criarAtv(String nomee, String desc, String statuss, String tagi,String nomeProf,int cod){
+        Atividade s = new Atividade (nomee,desc,statuss,tagi,cod);
         for(Disciplina p: listaDisc){
             if(p.getProf().contains(nomeProf)){
                 s.setDisc(p);
@@ -26,27 +40,29 @@ public class Fachada {
         
     }
     
-    public void buscar(String tagB){
+    public void buscar(int tagb){
         for(Atividade p: lista){
-            if(p.getTag().contains(tagB)){
+            if(p.getCod() == tagb){
                 System.out.println(p.toString());
             }
         }
     }
-    public void excluirAtividade(String tagB){
+    public void excluirAtividade(int tagB){
         for(Atividade p: lista){
-            if(p.getTag().contains(tagB)){
+            if(p.getCod()==(tagB)){
                 lista.remove(p);
             }
         }
     }
-    public void concluirAtividade(String tagB,String novoStt){
+    public void concluirAtividade(int tagB){
         for(Atividade p: lista){
-            if(p.getTag().contains(tagB)){
-                p.setStatus(novoStt);
+            if(p.getCod()== tagB){
+                p.setStatus("Concluida");
             }
         }
     }
+    
+    
     public void visualizarAtvs(){
         System.out.println("ATIVIDADES");
         for(Atividade p: lista){
@@ -65,7 +81,7 @@ public class Fachada {
                 System.out.println("\nAtividades arquivadas:\n"+ p.toString());
             }
         }
+        
     }
-   
     }
         
