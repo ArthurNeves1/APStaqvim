@@ -47,9 +47,10 @@ public class Fachada {
             }
         }
     }
-    public void excluirAtividade(int tagB){
+   
+    public void excluirAtividade(int cod){
         for(Atividade p: lista){
-            if(p.getCod()==(tagB)){
+            if(p.getCod()==cod){
                 lista.remove(p);
             }
         }
@@ -58,6 +59,7 @@ public class Fachada {
         for(Atividade p: lista){
             if(p.getCod()== tagB){
                 p.setStatus("Concluida");
+                System.out.println("Atividade concluida");
             }
         }
     }
@@ -71,7 +73,7 @@ public class Fachada {
     }
     public void feed(){
         for(Atividade p: lista){
-            if(p.getStatus().contains("Em andamento")){
+            if(p.getStatus().contains("Emandamento")){
                 System.out.println("\nAtividades em Andamento:\n"+p.toString());
             }
             if(p.getStatus().contains("Finalizada")){
