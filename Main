@@ -1,38 +1,46 @@
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package taqvim;
 
 import java.util.Scanner;
 
-/**
- *
- * @author Vinícius
- */
+
 public class Main {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         
         
         //OBS: O STATUS DAS ATIVIDADES DEVEM SER = "    Em andamento / Finalizada / Arquivada
         
         Fachada x = new Fachada();
+        
+        
         Scanner s = new Scanner(System.in);
         
-        System.out.println("Oque voce deseja fazer:\n 1-Criar Disciplina 2-Criar Atividade");
-        String alet = s.next();
         
-    
         
+        
+        System.out.println("Informe uma disciplina primaria");
 
-        if(alet == "1"){
+        System.out.println("Digite seu acrônimo:");
+        String acro = s.next();
+        System.out.println("Digite o nome do Profinho:");
+        String profe = s.next();
+        System.out.println("Digite a senha:");
+        String senh = s.next();
+        x.criarDisc(acro, profe, senh);
+        
+        
+        System.out.println("Oque voce deseja fazer:\n 1-Criar Atividade 2-Criar Disciplina 3-Buscar Atividade 4-Excluir Atividade 5-Concluir Atividade 6-Ver feed");
+       
+        
+        int alet = s.nextInt();
+        
+        while(alet<7){
+        
+        if(alet == 1){
             System.out.println("Digite o nome:");
             String nome = s.next();
             System.out.println("Digite a descrição:");
@@ -41,11 +49,17 @@ public class Main {
             String stts = s.next();
             System.out.println("Digite a Tag:");
             String tag = s.next();
+            System.out.println("Digite o professor:");
+            String prof = s.next();
             System.out.println("Digite o codigo da atividade");
             int cod = s.nextInt();
-            x.criarAtv(nome, desc, stts, tag, nome, cod);
+            x.criarAtv(nome, desc, stts, tag,prof, cod);
+            System.out.println(" ");
+          
+            x.visualizarAtvs();
         }
-        if(alet == "2"){
+        
+        if(alet == 2){
             System.out.println("Digite seu acrônimo:");
             String acr = s.next();
             System.out.println("Digite o nome do Profinho:");
@@ -53,32 +67,35 @@ public class Main {
             System.out.println("Digite a senha:");
             String senha = s.next();
             x.criarDisc(acr, prof, senha);
+            
 
         }
-        if(alet == "3" ){
-            System.out.println("Digite o codigo da atividade");
+        if(alet == 3 ){
+            x.visualizarAtvs();
+        	
+        	System.out.println("Digite o codigo da atividade");
             int cod = s.nextInt();
             x.buscar(cod);
             
             
             
         }
-        if(alet == "4"){
+        if(alet == 4){
             System.out.println("Digite o codigo da atividade pra ser excluida");
             int cod = s.nextInt();
             x.excluirAtividade(cod);
         }
-        if(alet == "5"){
+        if(alet == 5){
             System.out.println("Digite o codigo da atividade pra ser concluida");
             int cod = s.nextInt();
             x.concluirAtividade(cod);
         }
         
         
-        
+        System.out.println(" ");
 
-        
-        
+        System.out.println("Oque voce deseja fazer:\n 1-Criar Atividade 2-Criar Disciplina 3-Buscar Atividade 4-Excluir Atividade 5-Concluir Atividade 6-Ver feed 7-sair");
+        alet = s.nextInt();
     }
-    
+    }
 }
