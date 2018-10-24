@@ -1,21 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package taqvim;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Vinícius
- */
+
 public class Disciplina {
     
     private String acr;
     private String prof;
-    private String senha;
+   
     
 
     
@@ -28,9 +20,7 @@ public class Disciplina {
         this.prof = prof;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+   
 
     public String getAcr() {
         return acr;
@@ -39,23 +29,16 @@ public class Disciplina {
     public String getProf() {
         return prof;
     }
+    
 
-    public String getSenha() {
-        return senha;
-    }
-
-    Disciplina(String acr, String prof, String senha) {
-        this.acr = acr;
-        this.prof = prof;
-        this.senha = senha;
-      
+    Disciplina(String acr, String prof){
+    	this.acr = acr;
+    	this.prof = prof;
+    
     }
 
     @Override
     public String toString() {
-        return "Disciplina{" + "acr=" + acr + ", prof=" + prof + ", senha=" + senha + '}';
+        return "Disciplina{" + "Nome da disciplina =" + acr + ", professor=" + prof + '}';
     }
-    
-    
-    
 }
