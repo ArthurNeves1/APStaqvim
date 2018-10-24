@@ -26,7 +26,6 @@ public class Atividade {
 	    }
 
 	    
-
 	    public void setDisc(Disciplina x) {
 	        this.disc = x;
 	    }
@@ -71,12 +70,4 @@ public class Atividade {
 	    public int getCod() {
 	        return cod;
 	    }
-
-	    public void setCod(int cod) {
-	        this.cod = cod;
-	    }
-	    
-	 
-	    
-	}
-
+}
