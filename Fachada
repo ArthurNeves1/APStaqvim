@@ -1,9 +1,12 @@
-package taqvin;
+package taqvim;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-
+/**
+ *
+ * @author Vinícius
+ */
 public class Fachada {
     
     ArrayList<Atividade> lista = new ArrayList<Atividade>();
@@ -25,11 +28,6 @@ public class Fachada {
             if(p.getProf().contains(nomeProf)){
                 s.setDisc(p);
                 lista.add(s);
-            }else{
-            	s.setDisc(p);
-            	lista.add(s);
-            	
-            	
             }
         }
         
