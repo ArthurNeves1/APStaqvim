@@ -1,0 +1,176 @@
+package taqvim;
+
+import java.util.ArrayList;
+import taqvim.DAOPessoa;
+import taqvim.Disciplina;
+
+public class TestaConexaoBD {
+
+	public static void main(String[] args) {
+            
+                ConexaoBD x = new ConexaoBD();
+		DAOPessoa conexao = new DAOPessoa();
+		
+		System.out.println("Criando Disciplina...");
+		conexao.criarPessoa(new Disciplina("1234456","Maria Joaquina"));	
+		conexao.criarPessoa(new Disciplina("1124","Fabricio"));
+		System.out.println("-------------------------------------");
+		
+		
+		}
+	
+	
+}
+
+
+package taqvim;
+
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.sql.ResultSet;
+
+
+public class DAOPessoa {
+private ConexaoBD conexao;
+private boolean login = false;
+
+
+
+	public DAOPessoa() {
+		// cria o objeto para conexão com banco, porém não o inicializa
+		// a conexão deve ser aberta e, consequentemente, fechada durante o envio de comandos
+		// ao banco
+		this.conexao = new ConexaoBD();
+	}
+	
+	public void criarPessoa(Disciplina User) {
+		// abrindo a conexão com o BD
+		conexao.conectar();
+
+		try {
+			// usando um PreparedStatement com valores externos como parâmetros (representados pelo '?')
+			PreparedStatement pst = conexao.getConexao().prepareStatement("insert into \"taqvim\".Disciplina(acr,prof) values(?,?)");
+			// os métodos set devem ser escolhidos de acordo com os tipos dos atributos da entidade que está
+			// sendo acessada. A sequência é determinada por índices, iniciando do valor 1.
+			
+			pst.setString(1,User.getAcr());
+			pst.setString(2, User.getProf());
+			
+			
+			
+			
+			
+			// solicitação da execução da query, após seu preparo
+			pst.execute();
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			// o banco deve ser desconectado, mesmo quando a exceção é lançada
+			conexao.desconectar();
+		}
+		
+	}
+	
+	
+	}
+
+	
+		
+    
+    
+    
+    package taqvim;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class ConexaoBD {
+
+	private Connection conexao;
+	private String driver, caminho, user, password;
+	
+	public ConexaoBD() {
+		// atributo para definição do serviço do BD utilizado pela aplicação
+		this.driver = "org.postgresql.Driver";
+		// atributo para definição da url de acesso ao banco
+		this.caminho = "jdbc:postgresql://localhost:5432/ifpb";
+		// atributo para definição do login do usuário no banco
+		this.user = "postgres";
+		// atributo para definição da senha do usuário no banco
+		this.password = "ifpb";
+		// objeto responsável pelo estabelecimento da conexão com o BD (será inicializado quando a conexão
+		// com o banco for iniciada)
+		this.conexao = null;
+	}
+	
+	public void conectar() {
+		// seta o drive de conexão como propriedade do sistema acessível pela aplicação ao ser
+		// executada sobre a instância da JVM (o driver do BD deve ser importado para o projeto no Java Build Path) 
+		System.setProperty("jdbc.Drivers", driver);
+		
+		try {
+			// inicialização da conexão com o banco
+			conexao = DriverManager.getConnection(caminho, user, password);
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+	
+	public void desconectar() {
+		try {
+			// finalização da conexão com o banco (deve sempre ser chamado ao encerrar um
+			// acesso ao banco)
+			conexao.close();
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+	
+	public ResultSet executarSQL(String comando) {
+		// toda consulta ao banco resulta em um objeto do tipo ResultSet
+		ResultSet resultado = null;
+		
+		try {
+			// objeto que permita e realiza a interface dos comandos SQL a serem enviados da
+			// aplicação Java para o BD
+			PreparedStatement stm = conexao.prepareStatement(comando);
+			stm.execute();
+			resultado = stm.getResultSet();
+			
+			// outra forma de realizar consultas ao banco:
+			// Statement stm = conexao.createStatement();
+			// resultado = stm.executeQuery(comando);
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+		return resultado;
+	}
+
+	// para acessar a conexão (que está encapsulada)
+	public Connection getConexao() {
+		return conexao;
+	}
+	
+}
+
+
+-- SCHEMA: taqvimH
+
+-- DROP SCHEMA "taqvimH" ;
+
+CREATE SCHEMA "taqvim"
+    AUTHORIZATION postgres;
+    
+create table taqvim.Disciplina(
+    acr varchar(50),
+    prof varchar(50)
+
+);
+
+select * from taqvim.Disciplina;
