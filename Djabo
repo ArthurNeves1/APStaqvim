@@ -160,17 +160,25 @@ public class ConexaoBD {
 }
 
 
--- SCHEMA: taqvimH
-
--- DROP SCHEMA "taqvimH" ;
-
-CREATE SCHEMA "taqvim"
+CREATE SCHEMA taqvim
     AUTHORIZATION postgres;
+    
     
 create table taqvim.Disciplina(
     acr varchar(50),
     prof varchar(50)
 
 );
+create table taqvim.Atividade(
+	nome varchar(50),
+    descr varchar(50),
+    stts varchar(50),
+    tag varchar(50),
+    cod int
+    
+	);
 
 select * from taqvim.Disciplina;
+select * from taqvim.Atividade;
+
+drop table taqvim.Atividade;
