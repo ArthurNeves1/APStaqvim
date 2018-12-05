@@ -70,9 +70,78 @@ private boolean login = false;
 			// o banco deve ser desconectado, mesmo quando a exceção é lançada
 			conexao.desconectar();
 		}
+          
 		
 	}
+        public void criarATV(Atividade atividade) {
+		// abrindo a conexão com o BD
+		conexao.conectar();
+
+		try {
+			// usando um PreparedStatement com valores externos como parâmetros (representados pelo '?')
+			PreparedStatement pst = conexao.getConexao().prepareStatement("insert into \"taqvim\".atividade(nome,descr,stts,tag,cod) values(?,?,?,?,?)");
+			// os métodos set devem ser escolhidos de acordo com os tipos dos atributos da entidade que está
+			// sendo acessada. A sequência é determinada por índices, iniciando do valor 1.
+			
+			pst.setString(1,atividade.getNome());
+			pst.setString(2,atividade.getDesc());
+                        pst.setString(3,atividade.getStatus());
+                        pst.setString(4,atividade.getTag());
+                        pst.setInt(5,atividade.getCod());
+			
+			
+			
+			
+			
+			// solicitação da execução da query, após seu preparo
+			pst.execute();
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			// o banco deve ser desconectado, mesmo quando a exceção é lançada
+			conexao.desconectar();
+		}
+          
+		
+	}
+	public void excluiratv(int cod) {
+		// abrindo a conexão com o BD
+		conexao.conectar();
+		
+		try {
+			PreparedStatement stm = conexao.getConexao().prepareStatement("delete from \"taqvim\".atividade where cod = \'" + cod + "\'");
+			stm.execute();
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			// o banco deve ser desconectado, mesmo quando a exceção é lançada
+			conexao.desconectar();
+		}
+	}
+        public Atividade buscaratividade(int cod) {
+		// abrindo a conexão com o BD
+		conexao.conectar();
+		// busca utilizando o método de consulta do objeto ConexaoBD
+		ResultSet resultado = conexao.executarSQL("select * from \"taqvim\".atividade where cod = \'" + cod + "\'");
+		Atividade Atv = new Atividade(null, null, null, null, cod);
 	
+		try {
+			resultado.next();
+			// os métodos get devem ser escolhidos de acordo com os tipos dos atributos da entidade que está
+			// sendo acessada
+			int codr = resultado.getInt("cod");
+			
+			Atv.setCod(cod);
+			
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			// o banco deve ser desconectado, mesmo quando a exceção é lançada
+			conexao.desconectar();
+		}
+		return Atv;
+	}
+
 	
 	}
 
