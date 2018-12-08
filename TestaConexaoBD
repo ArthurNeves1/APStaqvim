@@ -1,0 +1,123 @@
+package taqvim;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import taqvim.DAOPessoa;
+import taqvim.Disciplina;
+
+public class TestaConexaoBD {
+
+	public static void main(String[] args) {
+            
+                ConexaoBD x = new ConexaoBD();
+		DAOPessoa conexao = new DAOPessoa();
+		/*
+		System.out.println("Criando Disciplina...");
+		conexao.criarPessoa(new Disciplina("1234456","Maria Joaquina"));	
+		conexao.criarPessoa(new Disciplina("1124","Fabricio"));
+		System.out.println("-------------------------------------");
+                
+                System.out.println("Criando Atividade ...");
+                conexao.criarATV(new Atividade("aaaaa","bbbb","cccc","ccc",15));
+                conexao.criarATV(new Atividade("sssssssss","joao","carl","aaaaaaa",54));
+                System.out.println("-----------------------------");
+                
+                conexao.excluirDisc("1124");
+                
+                System.out.println("Excluindo atividade");
+                conexao.excluiratv(15);
+                System.out.println("------------------------");
+                
+                System.out.println("Buscando Atividade");
+                System.out.println(conexao.buscaratividade(55));
+                System.out.println("------------------------");
+		
+                System.out.println("Mostrando feed");
+                System.out.println(conexao.verTodos());
+                System.out.println("------------------------");
+                
+                System.out.println("Editar status");
+                conexao.editarAtv(54, "Em andamento");
+                System.out.println("--------------------------");
+                */
+                
+                
+                Scanner s = new Scanner(System.in);
+                
+                System.out.println("Informe uma disciplina primaria");
+
+                System.out.println("Digite o nome da disciplina:");
+                String acro = s.nextLine();
+                System.out.println("Digite o nome do Profinho:");
+                String profe = s.nextLine();
+                System.out.println("_______________________________________________________________________________________________");
+                conexao.criarPessoa(new Disciplina(acro,profe));
+        
+                System.out.println("_______________________________________________________________________________________________");
+                System.out.println("Oque voce deseja fazer:\n 1-Criar Atividade 2-Criar Disciplina 3-Buscar Atividade 4-Excluir Atividade 5-Concluir Atividade 6-Excluir Disciplina 7-Ver feed 8-sair");
+       
+        
+                int alet = s.nextInt();
+        
+                while(alet<8){
+                if(alet == 1){
+                    System.out.println("Digite o nome:");
+                    String nome = s.next();
+                    System.out.println("Digite a descrição:");
+                    String desc = s.next();
+                    System.out.println("Digite a Status:");
+                    String stts = s.next();
+                    System.out.println("Digite a Tag:");
+                    String tag = s.next();
+                    System.out.println("Digite o codigo da atividade");
+                    int cod = s.nextInt();
+                    
+                    conexao.criarATV(new Atividade(nome,desc,stts,tag,cod));
+
+                    System.out.println("_______________________________________________________________________________________________");
+                    
+
+                }
+                if(alet == 2){
+                    System.out.println("Digite seu acronimo:");
+                    String acr = s.next();
+                    System.out.println("Digite o nome do Profinho:");
+                    String prof = s.next();
+                    System.out.println("_______________________________________________________________________________________________");
+                    conexao.criarPessoa(new Disciplina(acr,prof));
+                    System.out.println("_______________________________________________________________________________________________");
+                }
+                if(alet == 3 ){
+                    System.out.println("Digite o codigo da atividade:");
+                    int cod = s.nextInt();
+                    System.out.println(conexao.buscaratividade(cod));
+                    
+
+                }
+                if(alet == 4){
+                    System.out.println("Digite o codigo da atividade pra ser excluida");
+                    int code = s.nextInt();
+                    conexao.excluiratv(code);
+                    
+                }
+                if(alet == 5){
+                    System.out.println("Digite o codigo da atividade pra ser concluida");
+                    int cod = s.nextInt();
+                    conexao.editarAtv(cod, "Concluida");
+                }
+                if(alet == 6){
+                    System.out.println("Digite o acronimo da disciplina pra ser excluida");
+                    String code = s.next();
+                    conexao.excluirDisc(code);
+                }
+                if(alet == 7){
+                    System.out.println(conexao.verTodos());
+                }
+
+                System.out.println(" ");
+                System.out.println("Oque voce deseja fazer:\n 1-Criar Atividade 2-Criar Disciplina 3-Buscar Atividade 4-Excluir Atividade 5-Concluir Atividade 6-Excluir Disciplina 7-Ver feed 8-sair");
+                alet = s.nextInt();
+        
+    }
+        }
+}
