@@ -14,21 +14,15 @@ private boolean login = false;
 
 
 	public DAOPessoa() {
-		// cria o objeto para conexão com banco, porém não o inicializa
-		// a conexão deve ser aberta e, consequentemente, fechada durante o envio de comandos
-		// ao banco
+            
 		this.conexao = new ConexaoBD();
 	}
 	
 	public void criarPessoa(Disciplina User) {
-		// abrindo a conexão com o BD
 		conexao.conectar();
 
 		try {
-			// usando um PreparedStatement com valores externos como parâmetros (representados pelo '?')
 			PreparedStatement pst = conexao.getConexao().prepareStatement("insert into \"taqvim\".Disciplina(acr,prof) values(?,?)");
-			// os métodos set devem ser escolhidos de acordo com os tipos dos atributos da entidade que está
-			// sendo acessada. A sequência é determinada por índices, iniciando do valor 1.
 			
 			pst.setString(1,User.getAcr());
 			pst.setString(2, User.getProf());
@@ -37,26 +31,20 @@ private boolean login = false;
 			
 			
 			
-			// solicitação da execução da query, após seu preparo
 			pst.execute();
 		} catch (SQLException e) {
 			System.out.println("Erro: " + e.getMessage());
 		} finally {
-			// o banco deve ser desconectado, mesmo quando a exceção é lançada
 			conexao.desconectar();
 		}
           
 		
 	}
         public void criarATV(Atividade atividade) {
-		// abrindo a conexão com o BD
 		conexao.conectar();
 
 		try {
-			// usando um PreparedStatement com valores externos como parâmetros (representados pelo '?')
 			PreparedStatement pst = conexao.getConexao().prepareStatement("insert into \"taqvim\".atividade(nome,descr,stts,tag,cod) values(?,?,?,?,?)");
-			// os métodos set devem ser escolhidos de acordo com os tipos dos atributos da entidade que está
-			// sendo acessada. A sequência é determinada por índices, iniciando do valor 1.
 			
 			pst.setString(1,atividade.getNome());
 			pst.setString(2,atividade.getDesc());
@@ -68,19 +56,16 @@ private boolean login = false;
 			
 			
 			
-			// solicitação da execução da query, após seu preparo
 			pst.execute();
 		} catch (SQLException e) {
 			System.out.println("Erro: " + e.getMessage());
 		} finally {
-			// o banco deve ser desconectado, mesmo quando a exceção é lançada
 			conexao.desconectar();
 		}
           
 		
 	}
 	public void excluiratv(int cod) {
-		// abrindo a conexão com o BD
 		conexao.conectar();
 		
 		try {
@@ -89,12 +74,10 @@ private boolean login = false;
 		} catch (SQLException e) {
 			System.out.println("Erro: " + e.getMessage());
 		} finally {
-			// o banco deve ser desconectado, mesmo quando a exceção é lançada
 			conexao.desconectar();
 		}
 	}
         public void excluirDisc(String acr) {
-		// abrindo a conexão com o BD
 		conexao.conectar();
 		
 		try {
@@ -103,21 +86,17 @@ private boolean login = false;
 		} catch (SQLException e) {
 			System.out.println("Erro: " + e.getMessage());
 		} finally {
-			// o banco deve ser desconectado, mesmo quando a exceção é lançada
 			conexao.desconectar();
 		}
 	}
         public Atividade buscaratividade(int codr) {
-		// abrindo a conexão com o BD
 		conexao.conectar();
-		// busca utilizando o método de consulta do objeto ConexaoBD
 		ResultSet resultado = conexao.executarSQL("select * from \"taqvim\".atividade where cod = \'" + codr + "\'");
 		Atividade Atv = new Atividade(null, null, null, null, codr);
 	
 		try {
 			resultado.next();
-			// os métodos get devem ser escolhidos de acordo com os tipos dos atributos da entidade que está
-			// sendo acessada
+                        
 			codr = resultado.getInt("cod");
                         String nome = resultado.getString("nome");
                         String descr = resultado.getString("descr");
@@ -136,20 +115,17 @@ private boolean login = false;
 		} catch (SQLException e) {
 			System.out.println("Erro: " + e.getMessage());
 		} finally {
-			// o banco deve ser desconectado, mesmo quando a exceção é lançada
 			conexao.desconectar();
 		}
 		return Atv;
 	}
-        public ArrayList<Atividade> verTodos() {
+        public void verTodos() {
 		ArrayList<Atividade> pessoas = new ArrayList<>();
 		
-		// abrindo a conexão com o BD
 		conexao.conectar();
 		ResultSet resultado = conexao.executarSQL("select * from \"taqvim\".atividade");
 		
 		try {
-			// para iterar sobre os resultados de uma consulta, deve-se utilizar o método next()
 			while (resultado.next()) {
 				String nome = resultado.getString("nome");
 				String descr = resultado.getString("descr");
@@ -162,13 +138,36 @@ private boolean login = false;
 		} catch (SQLException e) {
 			System.out.println("Erro: " + e.getMessage());
 		} finally {
-			// o banco deve ser desconectado, mesmo quando a exceção é lançada
 			conexao.desconectar();
 		}
-		return pessoas;
-	}
-        public void editarAtv(int cod, String sttss) {
-		// abrindo a conexão com o BD
+		for(Atividade p: pessoas){
+                        System.out.println(p);
+                }
+    }
+                public void verTodasDisc() {
+		ArrayList<Disciplina> disciplinas = new ArrayList<>();
+		
+		conexao.conectar();
+		ResultSet resultado = conexao.executarSQL("select * from \"taqvim\".disciplina");
+		
+		try {
+			while (resultado.next()) {
+				String acr = resultado.getString("acr");
+				String prof = resultado.getString("prof");
+				
+				disciplinas.add(new Disciplina(acr,prof));
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			conexao.desconectar();
+		}
+		for(Disciplina p: disciplinas){
+                        System.out.println(p);
+                }
+    }
+        
+        public void concAtv(int cod, String sttss) {
 		conexao.conectar();
 		
 		try {
@@ -179,7 +178,6 @@ private boolean login = false;
 		} catch (SQLException e) {
 			System.out.println("Erro: " + e.getMessage());
 		} finally {
-			// o banco deve ser desconectado, mesmo quando a exceção é lançada
 			conexao.desconectar();
 		}
 	}
